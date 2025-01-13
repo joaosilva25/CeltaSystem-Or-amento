@@ -1,0 +1,527 @@
+"use client";
+import { Console } from "console";
+import { useEffect, useState, createContext } from "react";
+import { FaDeleteLeft } from "react-icons/fa6";
+import { IoAddCircle } from "react-icons/io5";
+import Resume from "./Resume";
+import { MyContextType } from "../../types/MyContext";
+
+export const MyContext = createContext<MyContextType | null>(null);
+export default function FormTemplate() {
+  let [activeTab, setActiveTab] = useState(0);
+
+  interface Produto {
+    produto: string;
+    medidas: string;
+    quantidade: string;
+    valor: string;
+  }
+
+  interface Alert {
+    severity: "error" | "warning" | "info" | "success";
+    text: string;
+    show: boolean;
+  }
+
+  const [prodInputs, setProdInputs] = useState<Produto[]>([
+    {
+      produto: "",
+      medidas: "6,06m x 2,44m x 2,59m (20ST)",
+      quantidade: "",
+      valor: "",
+    },
+  ]);
+  const [attendent, setAttendent] = useState("");
+  const [modalOrder, setModalOrder] = useState("");
+  const [cliente, setCliente] = useState("");
+  const [email, setEmail] = useState("");
+  const [cnpj, setCnpj] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [freteEntrega, setFreteEntrega] = useState("");
+  const [freteRetirada, setFreteRetirada] = useState("");
+  const [periodoMinimo, setPeriodoMinimo] = useState("");
+  const [localUtilizacao, setLocalUtilizacao] = useState("");
+  const [depositoRetirada, setDepositoRetirada] = useState("");
+  const [obs, setObs] = useState("");
+  const [loadReqText, setLoadReqText] = useState(false);
+  const [errorReq, setErrorReq] = useState(false);
+
+  const [showAlert, setShowAlert] = useState<Alert>({
+    severity: "success",
+    text: "",
+    show: false,
+  });
+
+  const addNewProduct = () => {
+    setProdInputs([
+      ...prodInputs,
+      {
+        produto: "",
+        medidas: "6,06m x 2,44m x 2,59m (20ST)",
+        quantidade: "",
+        valor: "",
+      },
+    ]);
+    console.log(prodInputs);
+  };
+
+  const handleInputChange = (index: any, field: any, value: any) => {
+    const updatedProdInputs: any = [...prodInputs];
+    console.log(updatedProdInputs);
+    updatedProdInputs[index][field] = value;
+    setProdInputs(updatedProdInputs);
+  };
+
+  const deleteProduct = (indexProd: number) => {
+    prodInputs.splice(indexProd, 1);
+    setProdInputs([...prodInputs]);
+  };
+
+  const requisiton = async () => {
+    setLoadReqText(true);
+    // if (
+    //   attendent &&
+    //   cliente &&
+    //   email &&
+    //   cnpj &&
+    //   telefone &&
+    //   freteEntrega &&
+    //   freteRetirada &&
+    //   periodoMinimo &&
+    //   localUtilizacao &&
+    //   depositoRetirada &&
+    //   obs
+    // ) {
+    const req = await fetch(
+      "https://n8n-zgewg-u14829.vm.elestio.app/webhook-test/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Atendente: `${attendent}`,
+          Modelo: `${modalOrder}`,
+          Cliente: `${cliente}`,
+          Email: `${email}`,
+          CNPJ: `${cnpj}`,
+          Telefone: `${telefone}`,
+          FreteEntrega: `${freteEntrega}`,
+          FreteRetirada: `${freteRetirada}`,
+          PeriodoMinimo: `${periodoMinimo}`,
+          LocalUtilizacao: `${localUtilizacao}`,
+          DepositoRetirada: `${depositoRetirada}`,
+          Obs: `${obs}`,
+          Produtos: prodInputs.map((input) => ({
+            Produto: input.produto,
+            Quantidade: input.quantidade,
+            Valor: input.valor,
+            Medidas: input.medidas,
+          })),
+        }),
+      }
+    );
+    if (req.ok) {
+      setShowAlert({
+        severity: "success",
+        text: "orçamento gerado com Sucesso",
+        show: true,
+      });
+    } else {
+      setShowAlert({
+        severity: "error",
+        text: "Erro Interno na Requisição",
+        show: true,
+      });
+    }
+    // } else {
+    //   setShowAlert({
+    //     severity: "error",
+    //     text: "Preencha os campos para gerar Orçamento",
+    //     show: true,
+    //   });
+    // }
+    setLoadReqText(false);
+  };
+
+  const tabs = [
+    {
+      title: "Configurar Orçamento",
+      content: (
+        <>
+          <label className="mt-10 block text-sm/6 font-bold text-gray-900">
+            Atendente*
+          </label>
+          <select
+            className="mb-4 h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
+            value={attendent}
+            onChange={(e) => setAttendent(e.target.value)}
+          >
+            <option value="">Selecione...</option>
+            <option value="Adrielle">Adrielle</option>
+            <option value="Matheus">Matheus</option>
+            <option value="Patricia">Patricia</option>
+            <option value="Viviane">Viviane</option>
+            <option value="Teste">Teste</option>
+          </select>
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Modelo Contrato*
+          </label>
+          <select
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            value={modalOrder}
+            onChange={(e) => setModalOrder(e.target.value)}
+          >
+            <option value="Reefer20">Reefer 20</option>
+            <option value="Reefer40">Reefer 40</option>
+            <option value="Dry / Modular">Dry / Modular</option>
+          </select>
+        </>
+      ),
+      index: 1,
+    },
+    {
+      title: "Informações Cliente",
+      content: (
+        <>
+          <label className="mt-10 block text-sm/6 font-bold text-gray-900">
+            Nome / Empresa*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Cliente"
+            value={cliente}
+            onChange={(e) => setCliente(e.target.value)}
+          />
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Email*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Telefone*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Telefone"
+            type="number"
+            value={telefone}
+            onChange={(e) => setTelefone(e.target.value)}
+          />
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            CNPJ da Empresa*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="CNPJ da Empresa"
+            value={cnpj}
+            onChange={(e) => setCnpj(e.target.value)}
+          />
+        </>
+      ),
+      index: 2,
+    },
+    {
+      title: "Produto",
+      content: (
+        <>
+          {prodInputs.map((input, index) => (
+            <div key={index}>
+              <div className="flex gap-10 mt-10 mb-10">
+                <h1 className="text-xl font-bold">
+                  Produto -{" "}
+                  <span className="font-light text-md">{index + 1}</span>
+                </h1>
+                {index > 0 ? (
+                  <button onClick={() => deleteProduct(index)}>
+                    <FaDeleteLeft size={25} />
+                  </button>
+                ) : null}
+              </div>
+
+              <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+                Produto*
+              </label>
+              <input
+                className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
+                placeholder="Produto"
+                value={input.produto}
+                onChange={(e) =>
+                  handleInputChange(index, "produto", e.target.value)
+                }
+              />
+
+              <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+                Medidas*
+              </label>
+              <select
+                className="h-12 block w-full  bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+                value={input.medidas}
+                onChange={(e) =>
+                  handleInputChange(index, "medidas", e.target.value)
+                }
+              >
+                <option value="6,06m x 2,44m x 2,59m (20ST)">
+                  6,06m x 2,44m x 2,59m (20ST)
+                </option>
+                <option value="6,06m x 2,44m x 2,90m (20HC)">
+                  6,06m x 2,44m x 2,90m (20HC)
+                </option>
+                <option value="12,19m x 2,44m x 2,59m (40ST)">
+                  12,19m x 2,44m x 2,59m (40ST)
+                </option>
+                <option value="12,19m x 2,44m x 2,90m (40HC)">
+                  12,19m x 2,44m x 2,90m (40HC)
+                </option>
+              </select>
+
+              <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+                Quantidade*
+              </label>
+              <input
+                className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
+                placeholder="Quantidade"
+                type="number"
+                value={input.quantidade}
+                onChange={(e) =>
+                  handleInputChange(index, "quantidade", e.target.value)
+                }
+              />
+
+              <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+                Valor*
+              </label>
+              <input
+                className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+                placeholder="Valor"
+                type="number"
+                value={input.valor}
+                onChange={(e) =>
+                  handleInputChange(index, "valor", e.target.value)
+                }
+              />
+            </div>
+          ))}
+          <button
+            onClick={() => addNewProduct()}
+            className="text-xl bg-transparent mt-10 h-14 flex w-full justify-center items-center px-3 py-1.5  font-semibold text-white shadow-sm focus-visible:outline"
+          >
+            <IoAddCircle size={40} className="text-black" />
+          </button>
+        </>
+      ),
+      index: 3,
+    },
+    {
+      title: "Frete",
+      content: (
+        <>
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Deposito Retirada*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Período Mínimo de Locação"
+            value={depositoRetirada}
+            onChange={(e) => setDepositoRetirada(e.target.value)}
+          />
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Local de utilização*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Período Mínimo de Locação"
+            value={localUtilizacao}
+            onChange={(e) => setLocalUtilizacao(e.target.value)}
+          />
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Frete de Entrega*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Frete de Entrega"
+            type="number"
+            value={freteEntrega}
+            onChange={(e) => setFreteEntrega(e.target.value)}
+          />
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Frete Retirada*
+          </label>
+          <input
+            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Frete Retirada"
+            type="number"
+            value={freteRetirada}
+            onChange={(e) => setFreteRetirada(e.target.value)}
+          />
+
+          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+            Período Mínimo de Locação (meses)*
+          </label>
+          <input
+            className="h-12 block w-full  bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            placeholder="Período Mínimo de Locação"
+            type="number"
+            value={periodoMinimo}
+            onChange={(e) => setPeriodoMinimo(e.target.value)}
+          />
+        </>
+      ),
+      index: 4,
+    },
+    {
+      title: "Observação",
+      content: (
+        <>
+          <label className="mt-10 block text-sm/6 font-bold text-gray-900">
+            Observação
+          </label>
+          <textarea
+            className="mb-4 h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            value={obs}
+            onChange={(e) => setObs(e.target.value)}
+          ></textarea>
+        </>
+      ),
+      index: 5,
+    },
+  ];
+
+  const next = () => {
+    let newActive = activeTab + 1;
+
+    console.log(activeTab);
+    if (newActive >= tabs.length) {
+      newActive = 0; // Se ultrapassar o índice máximo, volta para 0
+    }
+
+    // Atualizando o estado com o novo índice
+    setActiveTab(newActive);
+  };
+
+  return (
+    <MyContext.Provider
+      value={{
+        attendent,
+        setAttendent,
+        modalOrder,
+        setModalOrder,
+        cliente,
+        setCliente,
+        email,
+        setEmail,
+        cnpj,
+        setCnpj,
+        telefone,
+        setTelefone,
+        freteEntrega,
+        setFreteEntrega,
+        freteRetirada,
+        setFreteRetirada,
+        periodoMinimo,
+        setPeriodoMinimo,
+        localUtilizacao,
+        setLocalUtilizacao,
+        depositoRetirada,
+        setDepositoRetirada,
+        obs,
+        prodInputs,
+        errorReq,
+        showAlert,
+        setShowAlert,
+        setObs,
+        requisiton,
+        loadReqText,
+      }}
+    >
+      <div className="flex justify-center">
+        <div className="w-[500px] h-full flex justify-center  flex-col items-center">
+          {/* Abas de navegação */}
+          <div className="flex space-x-4 mb-6 w-full">
+            {/* {tabs.map((tab, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setActiveTab(index)}
+                            className={`px-4 py-2 ${activeTab === index ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-black'} rounded-md`}
+                        >
+                            {tab.title}
+                        </button>
+                    ))} */}
+
+            <div className="flex w-full items-center justify-between">
+              <h1 className="text-3xl font-bold">{tabs[activeTab].title}</h1>
+              <h4 className="text-xl">
+                {tabs[activeTab].index} /{" "}
+                <span className="font-bold">{tabs.length}</span>
+              </h4>
+            </div>
+          </div>
+          <div className="w-full bg-transparent flex justify-between text-sm">
+            {tabs.map((tab, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveTab(index)}
+                className={`w-42 p-2 ${
+                  activeTab === index
+                    ? "bg-black text-white font-bold"
+                    : "bg-transparent text-black"
+                }`}
+              >
+                {tab.title}
+              </button>
+            ))}
+          </div>
+
+          <form
+            className="flex  w-full justify-center flex-col overflow-y-auto overscroll-auto"
+            method="POST"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <div className="max-h-[600px]">{tabs[activeTab].content}</div>
+          </form>
+          <div className="mt-2 py-12 w-full">
+            <button
+              onClick={() => next()}
+              className="h-14 flex w-full justify-center  items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black focus-visible:outline"
+            >
+              Próximo
+            </button>
+            {/* {tabs.map((tab, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveTab(index)}
+                className={`px-4 py-2 mt-3 border-b ${
+                  activeTab === index
+                    ? "bg-black text-white"
+                    : "bg-transparent text-black"
+                }`}
+              >
+                <span className="text-xs">{tab.title}</span>
+              </button>
+            ))} */}
+          </div>
+
+          {/* <div className="flex flex-col w-1/2">
+                    {tabs[activeTab].content}
+                    <div className="mt-2 py-12">
+                        <button onClick={()=>next()}className="h-14 flex w-full justify-center rounded-md items-center bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline">
+                           Próximo
+                        </button>
+                    </div>
+                </div> */}
+        </div>
+      </div>
+      <Resume />
+    </MyContext.Provider>
+  );
+}
