@@ -6,6 +6,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import { AiOutlineLoading } from "react-icons/ai";
 import { OrbitProgress } from "react-loading-indicators";
+import { motion } from "motion/react";
 
 export default function Resume() {
   const context = useContext(MyContext);
@@ -43,22 +44,22 @@ export default function Resume() {
   }
 
   return (
-    <div className="flex items-center flex-col ">
+    <div className="flex items-center flex-col lg:justify-center">
       {showAlert.show && (
         <Alert
           severity={showAlert.severity}
-          className="flex relative bottom-4 w-[450px] mt-10"
+          className="flex relative bottom-4 w-[450px]"
           onClose={closeAlert}
         >
           {showAlert.text}
         </Alert>
       )}
-      <div className="w-[450px] h-[700px]  p-10 bg-white flex justify-center border flex-col items-center gap-10">
+      <div className="w-[400px] lg:h-[600px] p-10 bg-white flex justify-center border flex-col items-center gap-10">
         <div className="w-full ">
-          <h1 className="text-3xl text-center">
+          <h1 className="text-2xl text-center">
             <span className="font-bold">Res</span>umo
           </h1>
-          <p className="opacity-50 text-sm text-justify w-96 mt-8">
+          <p className="opacity-50 text-sm text-justify w-72 mt-8">
             Confira e confirme os dados inseridos antes de prosseguir com a
             ação.
           </p>
@@ -170,7 +171,7 @@ export default function Resume() {
         </div>
         <button
           onClick={requisiton}
-          className="h-14 relative top-10 flex w-full justify-center gap-5 items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black focus-visible:outline"
+          className="h-14 relative top-2 flex w-full justify-center gap-5 items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black focus-visible:outline"
         >
           {loadReqText ? (
             <>

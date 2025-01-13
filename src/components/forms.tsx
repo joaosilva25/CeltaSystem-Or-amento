@@ -2,6 +2,7 @@
 import { Console } from "console";
 import { useEffect, useState, createContext } from "react";
 import { FaDeleteLeft } from "react-icons/fa6";
+import { AnimatePresence, motion } from "motion/react";
 import { IoAddCircle } from "react-icons/io5";
 import Resume from "./Resume";
 import { MyContextType } from "../../types/MyContext";
@@ -27,8 +28,8 @@ export default function FormTemplate() {
     {
       produto: "",
       medidas: "6,06m x 2,44m x 2,59m (20ST)",
-      quantidade: "",
-      valor: "",
+      quantidade: "0",
+      valor: "0",
     },
   ]);
   const [attendent, setAttendent] = useState("");
@@ -37,9 +38,9 @@ export default function FormTemplate() {
   const [email, setEmail] = useState("");
   const [cnpj, setCnpj] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [freteEntrega, setFreteEntrega] = useState("");
-  const [freteRetirada, setFreteRetirada] = useState("");
-  const [periodoMinimo, setPeriodoMinimo] = useState("");
+  const [freteEntrega, setFreteEntrega] = useState("0");
+  const [freteRetirada, setFreteRetirada] = useState("0");
+  const [periodoMinimo, setPeriodoMinimo] = useState("0");
   const [localUtilizacao, setLocalUtilizacao] = useState("");
   const [depositoRetirada, setDepositoRetirada] = useState("");
   const [obs, setObs] = useState("");
@@ -79,68 +80,75 @@ export default function FormTemplate() {
 
   const requisiton = async () => {
     setLoadReqText(true);
-    // if (
-    //   attendent &&
-    //   cliente &&
-    //   email &&
-    //   cnpj &&
-    //   telefone &&
-    //   freteEntrega &&
-    //   freteRetirada &&
-    //   periodoMinimo &&
-    //   localUtilizacao &&
-    //   depositoRetirada &&
-    //   obs
-    // ) {
-    const req = await fetch(
-      "https://n8n-zgewg-u14829.vm.elestio.app/webhook-test/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Atendente: `${attendent}`,
-          Modelo: `${modalOrder}`,
-          Cliente: `${cliente}`,
-          Email: `${email}`,
-          CNPJ: `${cnpj}`,
-          Telefone: `${telefone}`,
-          FreteEntrega: `${freteEntrega}`,
-          FreteRetirada: `${freteRetirada}`,
-          PeriodoMinimo: `${periodoMinimo}`,
-          LocalUtilizacao: `${localUtilizacao}`,
-          DepositoRetirada: `${depositoRetirada}`,
-          Obs: `${obs}`,
-          Produtos: prodInputs.map((input) => ({
-            Produto: input.produto,
-            Quantidade: input.quantidade,
-            Valor: input.valor,
-            Medidas: input.medidas,
-          })),
-        }),
+    if (
+      attendent &&
+      cliente &&
+      email &&
+      cnpj &&
+      telefone &&
+      freteEntrega &&
+      freteRetirada &&
+      periodoMinimo &&
+      localUtilizacao &&
+      depositoRetirada &&
+      obs
+    ) {
+      let filterProducts = prodInputs.filter(
+        (produto) =>
+          produto.produto.trim() !== "" &&
+          produto.quantidade.trim() !== "" &&
+          produto.valor.trim() !== "" &&
+          produto.medidas.trim() !== ""
+      );
+      const req = await fetch(
+        "https://n8n-zgewg-u14829.vm.elestio.app/webhook-test/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Atendente: `${attendent}`,
+            Modelo: `${modalOrder}`,
+            Cliente: `${cliente}`,
+            Email: `${email}`,
+            CNPJ: `${cnpj}`,
+            Telefone: `${telefone}`,
+            FreteEntrega: `${freteEntrega}`,
+            FreteRetirada: `${freteRetirada}`,
+            PeriodoMinimo: `${periodoMinimo}`,
+            LocalUtilizacao: `${localUtilizacao}`,
+            DepositoRetirada: `${depositoRetirada}`,
+            Obs: `${obs}`,
+            Produtos: filterProducts.map((input) => ({
+              Produto: input.produto,
+              Quantidade: input.quantidade,
+              Valor: input.valor,
+              Medidas: input.medidas,
+            })),
+          }),
+        }
+      );
+      if (req.ok) {
+        setShowAlert({
+          severity: "success",
+          text: "orçamento gerado com Sucesso",
+          show: true,
+        });
+      } else {
+        setShowAlert({
+          severity: "error",
+          text: "Erro Interno na Requisição",
+          show: true,
+        });
       }
-    );
-    if (req.ok) {
-      setShowAlert({
-        severity: "success",
-        text: "orçamento gerado com Sucesso",
-        show: true,
-      });
     } else {
       setShowAlert({
         severity: "error",
-        text: "Erro Interno na Requisição",
+        text: "Preencha os campos para gerar Orçamento",
         show: true,
       });
     }
-    // } else {
-    //   setShowAlert({
-    //     severity: "error",
-    //     text: "Preencha os campos para gerar Orçamento",
-    //     show: true,
-    //   });
-    // }
     setLoadReqText(false);
   };
 
@@ -173,6 +181,7 @@ export default function FormTemplate() {
             value={modalOrder}
             onChange={(e) => setModalOrder(e.target.value)}
           >
+            <option value="">Selecione...</option>
             <option value="Reefer20">Reefer 20</option>
             <option value="Reefer40">Reefer 40</option>
             <option value="Dry / Modular">Dry / Modular</option>
@@ -269,6 +278,7 @@ export default function FormTemplate() {
                   handleInputChange(index, "medidas", e.target.value)
                 }
               >
+                <option value="">Selecione...</option>
                 <option value="6,06m x 2,44m x 2,59m (20ST)">
                   6,06m x 2,44m x 2,59m (20ST)
                 </option>
@@ -387,8 +397,9 @@ export default function FormTemplate() {
             Observação
           </label>
           <textarea
-            className="mb-4 h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="mb-4 block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             value={obs}
+            rows={5}
             onChange={(e) => setObs(e.target.value)}
           ></textarea>
         </>
@@ -445,10 +456,16 @@ export default function FormTemplate() {
       }}
     >
       <div className="flex justify-center">
-        <div className="w-[500px] h-full flex justify-center  flex-col items-center">
-          {/* Abas de navegação */}
-          <div className="flex space-x-4 mb-6 w-full">
-            {/* {tabs.map((tab, index) => (
+        <motion.div
+          key={tabs[activeTab].index}
+          initial={{ x: 200, opacity: 0 }}
+          animate={{ x: 0, opacity: 1, transition: { duration: 0.4 } }}
+          exit={{ x: -200, opacity: 0 }}
+        >
+          <div className="w-[450px] h-full flex justify-center flex-col items-center">
+            {/* Abas de navegação */}
+            <div className="flex space-x-4 mb-6 w-full">
+              {/* {tabs.map((tab, index) => (
                         <button
                             key={index}
                             onClick={() => setActiveTab(index)}
@@ -458,45 +475,45 @@ export default function FormTemplate() {
                         </button>
                     ))} */}
 
-            <div className="flex w-full items-center justify-between">
-              <h1 className="text-3xl font-bold">{tabs[activeTab].title}</h1>
-              <h4 className="text-xl">
-                {tabs[activeTab].index} /{" "}
-                <span className="font-bold">{tabs.length}</span>
-              </h4>
+              <div className="flex w-full items-center justify-between">
+                <h1 className="text-2xl font-bold">{tabs[activeTab].title}</h1>
+                <h4 className="text-xl">
+                  {tabs[activeTab].index} /{" "}
+                  <span className="font-bold">{tabs.length}</span>
+                </h4>
+              </div>
             </div>
-          </div>
-          <div className="w-full bg-transparent flex justify-between text-sm">
-            {tabs.map((tab, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTab(index)}
-                className={`w-42 p-2 ${
-                  activeTab === index
-                    ? "bg-black text-white font-bold"
-                    : "bg-transparent text-black"
-                }`}
-              >
-                {tab.title}
-              </button>
-            ))}
-          </div>
+            <div className="w-full bg-transparent flex gap-4 text-sm pb-4">
+              {tabs.map((tab, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveTab(index)}
+                  className={`bg-black h-3 w-3 rounded-full ${
+                    activeTab === index
+                      ? "bg-black rounded-none text-white font-bold"
+                      : "bg-gray-200 text-black"
+                  }`}
+                ></button>
+              ))}
+            </div>
 
-          <form
-            className="flex  w-full justify-center flex-col overflow-y-auto overscroll-auto"
-            method="POST"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className="max-h-[600px]">{tabs[activeTab].content}</div>
-          </form>
-          <div className="mt-2 py-12 w-full">
-            <button
-              onClick={() => next()}
-              className="h-14 flex w-full justify-center  items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black focus-visible:outline"
+            <form
+              className="flex  w-full justify-center flex-col overflow-y-auto overscroll-auto"
+              method="POST"
+              onSubmit={(e) => e.preventDefault()}
             >
-              Próximo
-            </button>
-            {/* {tabs.map((tab, index) => (
+              <div className="max-h-[400px]">{tabs[activeTab].content}</div>
+            </form>
+            <div className="mt-2 py-12 w-full">
+              <button
+                onClick={() => next()}
+                className="h-14 flex w-full shadow-xl
+
+justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline"
+              >
+                Próximo
+              </button>
+              {/* {tabs.map((tab, index) => (
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
@@ -509,9 +526,9 @@ export default function FormTemplate() {
                 <span className="text-xs">{tab.title}</span>
               </button>
             ))} */}
-          </div>
+            </div>
 
-          {/* <div className="flex flex-col w-1/2">
+            {/* <div className="flex flex-col w-1/2">
                     {tabs[activeTab].content}
                     <div className="mt-2 py-12">
                         <button onClick={()=>next()}className="h-14 flex w-full justify-center rounded-md items-center bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline">
@@ -519,7 +536,8 @@ export default function FormTemplate() {
                         </button>
                     </div>
                 </div> */}
-        </div>
+          </div>
+        </motion.div>
       </div>
       <Resume />
     </MyContext.Provider>
