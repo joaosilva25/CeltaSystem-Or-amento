@@ -6,18 +6,18 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Area() {
-  const isAuthenticated = sessionStorage.getItem("authenticated");
   const [authenticated, setAuthenticated] = useState(false);
   const router = useRouter();
 
-  console.log(authenticated);
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    } else {
-      setAuthenticated(true);
+    if (typeof window !== "undefined") {
+      if (!sessionStorage.getItem("authenticated")) {
+        router.push("/login");
+      } else {
+        setAuthenticated(true);
+      }
     }
-  }, [router, isAuthenticated]);
+  }, [router]);
 
   return (
     <main className="bg-white h-screen grid grid-rows-[auto,1fr] grid-cols-2 w-full">
