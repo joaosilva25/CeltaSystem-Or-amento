@@ -5,7 +5,7 @@ import Resume from "@/components/Resume";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 export default function Area() {
-  const isAuthenticated = localStorage.getItem("authenticated");
+  const isAuthenticated = sessionStorage.getItem("authenticated");
   const [authenticated, setAuthenticated] = useState(false);
   const router = useRouter();
 

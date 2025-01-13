@@ -14,7 +14,7 @@ export default function Login() {
     }
     if (accessCode === process.env.NEXT_PUBLIC_CODE) {
       router.push("/area");
-      localStorage.setItem("authenticated", "true");
+      sessionStorage.setItem("authenticated", "true");
     } else {
       setAccessError("Código de acesso incorreto");
     }
