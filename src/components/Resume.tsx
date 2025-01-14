@@ -46,15 +46,21 @@ export default function Resume() {
   return (
     <div className="flex items-center flex-col lg:justify-center bg-white">
       {showAlert.show && (
-        <Alert
-          severity={showAlert.severity}
-          className="flex relative bottom-4 w-[450px]"
-          onClose={closeAlert}
+        <motion.div
+          initial={{ scale: 1, opacity: 0 }}
+          animate={{ scale: 1.2, opacity: 1, transition: { duration: 0.3 } }}
+          exit={{ scale: 0, opacity: 0 }}
         >
-          {showAlert.text}
-        </Alert>
+          <Alert
+            severity={showAlert.severity}
+            className="flex relative bottom-4 w-[450px]"
+            onClose={closeAlert}
+          >
+            {showAlert.text}
+          </Alert>
+        </motion.div>
       )}
-      <div className="w-[400px] lg:h-[600px] p-10 bg-white flex justify-center border flex-col items-center gap-10">
+      <div className="w-[400px] lg:h-[600px] p-10 bg-white border flex justify-center flex-col items-center gap-10">
         <div className="w-full ">
           <h1 className="text-2xl text-center">
             <span className="font-bold">Res</span>umo
@@ -171,7 +177,7 @@ export default function Resume() {
         </div>
         <button
           onClick={requisiton}
-          className="h-14 relative top-2 flex w-full justify-center gap-5 items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black focus-visible:outline"
+          className="h-14 relative top-2 flex w-full justify-center gap-5 items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black active:scale-105 focus-visible:outline"
         >
           {loadReqText ? (
             <>

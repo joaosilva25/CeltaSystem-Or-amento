@@ -2,10 +2,12 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { motion } from "motion/react";
 
 export default function Login() {
   const router = useRouter();
   const [accessCode, setAcessCode] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const [accessError, setAccessError] = useState("");
 
   function acessLogin() {
@@ -33,48 +35,62 @@ export default function Login() {
           />
         </div>
       </header>
-      <div className="h-full flex font-bold justify-center items-center">
-        <div className="flex flex-col gap-6 w-1/2">
-          <div className="">
-            <h1 className="text-8xl lg:text-[45px]">
-              Bem <span className="font-light">Vindo</span>
-            </h1>
-            <h5 className="text-justify opacity-60 mt-6 text-sm font-light">
-              Sistema de Orçamentos: Organização, Padronização e Controle de
-              Propostas
+      <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        animate={{ x: 0, opacity: 1, transition: { duration: 0.7 } }}
+        exit={{ x: -200, opacity: 0 }}
+      >
+        <div className="h-full flex font-bold justify-center items-center">
+          <div className="flex flex-col gap-6 w-1/2">
+            <div className="">
+              <h1 className="text-8xl lg:text-[45px]">
+                Bem <span className="font-light">Vindo</span>
+              </h1>
+              <h5 className="text-justify opacity-60 mt-6 text-sm font-light">
+                Sistema de Orçamentos: Organização, Padronização e Controle de
+                Propostas
+              </h5>
+            </div>
+            <div className="mt-10">
+              <label className="lg:text-sm">Código Acesso*</label>
+              <input
+                placeholder="Username"
+                value={accessCode}
+                onChange={(e) => setAcessCode(e.target.value)}
+                className="lg:h-12 block w-full mt-3 bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
+              ></input>
+            </div>
+            <button
+              onClick={acessLogin}
+              className="h-12 flex w-full shadow-xl relative top-4
+justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline active:scale-105"
+            >
+              Acessar
+            </button>
+            <p className="text-center text-red-500 text-sm relative top-4">
+              {accessError}
+            </p>
+            <h5 className="text-center mt-8 text-md lg:text-sm">
+              <span className="font-light">Acesso somente de</span> usuários
+              autorizados
             </h5>
           </div>
-          <div className="mt-10">
-            <label className="lg:text-sm">Código Acesso*</label>
-            <input
-              placeholder="Username"
-              value={accessCode}
-              onChange={(e) => setAcessCode(e.target.value)}
-              className="lg:h-12 block w-full mt-3 bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
-            ></input>
-          </div>
-          <button
-            onClick={acessLogin}
-            className="h-12 flex w-full shadow-xl relative top-4
-justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline"
-          >
-            Acessar
-          </button>
-          <p className="text-center text-red-500 text-sm">{accessError}</p>
-          <h5 className="text-center mt-8 text-md lg:text-sm">
-            <span className="font-light">Acesso somente de</span> usuários
-            autorizados
-          </h5>
         </div>
-      </div>
+      </motion.div>
       <div className="h-full pl-12 pr-12 pb-8 flex justify-center">
         <div className="h-full flex w-3/4 bg-black items-center justify-center">
-          <Image
-            src="/CC_lockup_1_Negativo.png"
-            width={250}
-            height={250}
-            alt="Descrição da imagem significativa"
-          />
+          <motion.div
+            initial={{ y: 200, opacity: 0 }}
+            animate={{ y: 0, opacity: 1, transition: { duration: 0.7 } }}
+            exit={{ y: -200, opacity: 0 }}
+          >
+            <Image
+              src="/CC_lockup_1_Negativo.png"
+              width={250}
+              height={250}
+              alt="Descrição da imagem significativa"
+            />
+          </motion.div>
         </div>
       </div>
     </main>

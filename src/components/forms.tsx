@@ -27,7 +27,7 @@ export default function FormTemplate() {
   const [prodInputs, setProdInputs] = useState<Produto[]>([
     {
       produto: "",
-      medidas: "6,06m x 2,44m x 2,59m (20ST)",
+      medidas: "",
       quantidade: "0",
       valor: "0",
     },
@@ -58,7 +58,7 @@ export default function FormTemplate() {
       ...prodInputs,
       {
         produto: "",
-        medidas: "6,06m x 2,44m x 2,59m (20ST)",
+        medidas: "",
         quantidade: "",
         valor: "",
       },
@@ -245,12 +245,15 @@ export default function FormTemplate() {
           {prodInputs.map((input, index) => (
             <div key={index}>
               <div className="flex gap-10 mt-10 mb-10">
-                <h1 className="text-xl font-bold">
+                <h1 className="text-md font-bold">
                   Produto -{" "}
                   <span className="font-light text-md">{index + 1}</span>
                 </h1>
                 {index > 0 ? (
-                  <button onClick={() => deleteProduct(index)}>
+                  <button
+                    className="active:scale-105"
+                    onClick={() => deleteProduct(index)}
+                  >
                     <FaDeleteLeft size={25} />
                   </button>
                 ) : null}
@@ -477,7 +480,7 @@ export default function FormTemplate() {
 
               <div className="flex w-full items-center justify-between">
                 <h1 className="text-2xl font-bold">{tabs[activeTab].title}</h1>
-                <h4 className="text-xl">
+                <h4 className="text-md">
                   {tabs[activeTab].index} /{" "}
                   <span className="font-bold">{tabs.length}</span>
                 </h4>
@@ -498,7 +501,7 @@ export default function FormTemplate() {
             </div>
 
             <form
-              className="flex  w-full justify-center flex-col overflow-y-auto overscroll-auto"
+              className="flex  w-full justify-center flex-col overflow-y-auto overscroll-auto  p-2"
               method="POST"
               onSubmit={(e) => e.preventDefault()}
             >
@@ -507,9 +510,10 @@ export default function FormTemplate() {
             <div className="mt-2 py-12 w-full">
               <button
                 onClick={() => next()}
-                className="h-14 flex w-full shadow-xl
+                className="h-14 flex w-full shadow-xl p-2
 
-justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline"
+justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline
+active:scale-105"
               >
                 Próximo
               </button>
