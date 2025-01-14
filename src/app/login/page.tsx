@@ -54,7 +54,7 @@ export default function Login() {
             <div className="mt-10">
               <label className="lg:text-sm">Código Acesso*</label>
               <input
-                placeholder="Username"
+                placeholder="Código Acesso"
                 value={accessCode}
                 onChange={(e) => setAcessCode(e.target.value)}
                 className="lg:h-12 block w-full mt-3 bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
