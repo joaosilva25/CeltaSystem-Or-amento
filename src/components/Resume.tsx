@@ -44,7 +44,7 @@ export default function Resume() {
   }
 
   return (
-    <div className="flex items-center flex-col lg:justify-center">
+    <div className="flex items-center flex-col lg:justify-center bg-white">
       {showAlert.show && (
         <Alert
           severity={showAlert.severity}

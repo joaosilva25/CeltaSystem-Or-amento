@@ -455,7 +455,7 @@ export default function FormTemplate() {
         loadReqText,
       }}
     >
-      <div className="flex justify-center">
+      <div className="flex justify-center bg-white">
         <motion.div
           key={tabs[activeTab].index}
           initial={{ x: 200, opacity: 0 }}
@@ -490,7 +490,7 @@ export default function FormTemplate() {
                   onClick={() => setActiveTab(index)}
                   className={`bg-black h-3 w-3 rounded-full ${
                     activeTab === index
-                      ? "bg-black rounded-none text-white font-bold"
+                      ? "bg-black text-white font-bold"
                       : "bg-gray-200 text-black"
                   }`}
                 ></button>
