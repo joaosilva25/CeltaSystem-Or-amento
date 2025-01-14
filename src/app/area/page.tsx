@@ -27,7 +27,7 @@ export default function Area() {
       exit={{ x: -200, opacity: 0 }}
       className="overflow-x-hidden"
     >
-      <main className="h-[900px] grid grid-rows-[auto,1fr] grid-cols-2 w-full">
+      <main className="h-[700px] grid grid-rows-[auto,1fr] grid-cols-2 w-full">
         {/* Header */}
         <header className="col-span-2 p-0">
           <div className="h-[80px] w-[70px] bg-black p-0 flex items-center justify-center">
