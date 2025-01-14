@@ -78,8 +78,6 @@ export default function FormTemplate() {
     setProdInputs([...prodInputs]);
   };
 
-  const productionUrl = process.env.NEXT_PUBLIC_PRODUCTION_URL;
-
   const requisiton = async () => {
     setLoadReqText(true);
     if (
@@ -93,8 +91,7 @@ export default function FormTemplate() {
       periodoMinimo &&
       localUtilizacao &&
       depositoRetirada &&
-      obs &&
-      productionUrl
+      obs
     ) {
       let filterProducts = prodInputs.filter(
         (produto) =>
@@ -103,32 +100,35 @@ export default function FormTemplate() {
           produto.valor.trim() !== "" &&
           produto.medidas.trim() !== ""
       );
-      const req = await fetch(productionUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Atendente: `${attendent}`,
-          Modelo: `${modalOrder}`,
-          Cliente: `${cliente}`,
-          Email: `${email}`,
-          CNPJ: `${cnpj}`,
-          Telefone: `${telefone}`,
-          FreteEntrega: `${freteEntrega}`,
-          FreteRetirada: `${freteRetirada}`,
-          PeriodoMinimo: `${periodoMinimo}`,
-          LocalUtilizacao: `${localUtilizacao}`,
-          DepositoRetirada: `${depositoRetirada}`,
-          Obs: `${obs}`,
-          Produtos: filterProducts.map((input) => ({
-            Produto: input.produto,
-            Quantidade: input.quantidade,
-            Valor: input.valor,
-            Medidas: input.medidas,
-          })),
-        }),
-      });
+      const req = await fetch(
+        "https://n8n-zgewg-u14829.vm.elestio.app/webhook/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Atendente: `${attendent}`,
+            Modelo: `${modalOrder}`,
+            Cliente: `${cliente}`,
+            Email: `${email}`,
+            CNPJ: `${cnpj}`,
+            Telefone: `${telefone}`,
+            FreteEntrega: `${freteEntrega}`,
+            FreteRetirada: `${freteRetirada}`,
+            PeriodoMinimo: `${periodoMinimo}`,
+            LocalUtilizacao: `${localUtilizacao}`,
+            DepositoRetirada: `${depositoRetirada}`,
+            Obs: `${obs}`,
+            Produtos: filterProducts.map((input) => ({
+              Produto: input.produto,
+              Quantidade: input.quantidade,
+              Valor: input.valor,
+              Medidas: input.medidas,
+            })),
+          }),
+        }
+      );
       if (req.ok) {
         setShowAlert({
           severity: "success",
