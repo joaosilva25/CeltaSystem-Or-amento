@@ -78,6 +78,8 @@ export default function FormTemplate() {
     setProdInputs([...prodInputs]);
   };
 
+  const productionUrl = process.env.NEXT_PUBLIC_PRODUCTION_URL;
+
   const requisiton = async () => {
     setLoadReqText(true);
     if (
@@ -91,7 +93,8 @@ export default function FormTemplate() {
       periodoMinimo &&
       localUtilizacao &&
       depositoRetirada &&
-      obs
+      obs &&
+      productionUrl
     ) {
       let filterProducts = prodInputs.filter(
         (produto) =>
@@ -100,35 +103,32 @@ export default function FormTemplate() {
           produto.valor.trim() !== "" &&
           produto.medidas.trim() !== ""
       );
-      const req = await fetch(
-        "https://n8n-zgewg-u14829.vm.elestio.app/webhook-test/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            Atendente: `${attendent}`,
-            Modelo: `${modalOrder}`,
-            Cliente: `${cliente}`,
-            Email: `${email}`,
-            CNPJ: `${cnpj}`,
-            Telefone: `${telefone}`,
-            FreteEntrega: `${freteEntrega}`,
-            FreteRetirada: `${freteRetirada}`,
-            PeriodoMinimo: `${periodoMinimo}`,
-            LocalUtilizacao: `${localUtilizacao}`,
-            DepositoRetirada: `${depositoRetirada}`,
-            Obs: `${obs}`,
-            Produtos: filterProducts.map((input) => ({
-              Produto: input.produto,
-              Quantidade: input.quantidade,
-              Valor: input.valor,
-              Medidas: input.medidas,
-            })),
-          }),
-        }
-      );
+      const req = await fetch(productionUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Atendente: `${attendent}`,
+          Modelo: `${modalOrder}`,
+          Cliente: `${cliente}`,
+          Email: `${email}`,
+          CNPJ: `${cnpj}`,
+          Telefone: `${telefone}`,
+          FreteEntrega: `${freteEntrega}`,
+          FreteRetirada: `${freteRetirada}`,
+          PeriodoMinimo: `${periodoMinimo}`,
+          LocalUtilizacao: `${localUtilizacao}`,
+          DepositoRetirada: `${depositoRetirada}`,
+          Obs: `${obs}`,
+          Produtos: filterProducts.map((input) => ({
+            Produto: input.produto,
+            Quantidade: input.quantidade,
+            Valor: input.valor,
+            Medidas: input.medidas,
+          })),
+        }),
+      });
       if (req.ok) {
         setShowAlert({
           severity: "success",
@@ -275,7 +275,7 @@ export default function FormTemplate() {
                 Medidas*
               </label>
               <select
-                className="h-12 block w-full  bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+                className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
                 value={input.medidas}
                 onChange={(e) =>
                   handleInputChange(index, "medidas", e.target.value)
