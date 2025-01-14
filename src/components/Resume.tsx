@@ -56,7 +56,7 @@ export default function Resume() {
             className="flex relative bottom-4 w-[450px]"
             onClose={closeAlert}
           >
-            {showAlert.text}
+            <span className="text-xs">{showAlert.text}</span>
           </Alert>
         </motion.div>
       )}
