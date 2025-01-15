@@ -303,6 +303,7 @@ export default function FormTemplate() {
                 className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
                 placeholder="Quantidade"
                 type="number"
+                min={0}
                 value={input.quantidade}
                 onChange={(e) =>
                   handleInputChange(index, "quantidade", e.target.value)
@@ -316,6 +317,7 @@ export default function FormTemplate() {
                 className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
                 placeholder="Valor"
                 type="number"
+                min={0}
                 value={input.valor}
                 onChange={(e) =>
                   handleInputChange(index, "valor", e.target.value)
@@ -352,7 +354,7 @@ export default function FormTemplate() {
           </label>
           <input
             className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Local de utilização*"
+            placeholder="Local de utilização"
             value={localUtilizacao}
             onChange={(e) => setLocalUtilizacao(e.target.value)}
           />
@@ -364,6 +366,7 @@ export default function FormTemplate() {
             className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Frete de Entrega"
             type="number"
+            min={0}
             value={freteEntrega}
             onChange={(e) => setFreteEntrega(e.target.value)}
           />
@@ -374,6 +377,7 @@ export default function FormTemplate() {
             className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Frete Retirada"
             type="number"
+            min={0}
             value={freteRetirada}
             onChange={(e) => setFreteRetirada(e.target.value)}
           />
@@ -385,6 +389,7 @@ export default function FormTemplate() {
             className="h-12 block w-full  bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Período Mínimo de Locação"
             type="number"
+            min={1}
             value={periodoMinimo}
             onChange={(e) => setPeriodoMinimo(e.target.value)}
           />
