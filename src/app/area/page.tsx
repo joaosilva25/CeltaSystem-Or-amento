@@ -25,7 +25,7 @@ export default function Area() {
       initial={{ x: 200, opacity: 0 }}
       animate={{ x: 0, opacity: 1, transition: { duration: 0.7 } }}
       exit={{ x: -200, opacity: 0 }}
-      className="overflow-x-hidden"
+      className="overflow-x-hidden text-black"
     >
       <main className="h-[700px] grid grid-rows-[auto,1fr] grid-cols-2 w-full">
         {/* Header */}
