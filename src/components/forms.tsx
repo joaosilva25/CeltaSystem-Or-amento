@@ -28,7 +28,7 @@ export default function FormTemplate() {
     {
       produto: "",
       medidas: "",
-      quantidade: "0",
+      quantidade: "1",
       valor: "0",
     },
   ]);
@@ -59,7 +59,7 @@ export default function FormTemplate() {
       {
         produto: "",
         medidas: "",
-        quantidade: "",
+        quantidade: "1",
         valor: "",
       },
     ]);
