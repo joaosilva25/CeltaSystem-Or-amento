@@ -166,7 +166,6 @@ export default function FormTemplate() {
             onChange={(e) => setAttendent(e.target.value)}
           >
             <option value="">Selecione...</option>
-            <option value="Adrielle">Adrielle</option>
             <option value="Matheus">Matheus</option>
             <option value="Patricia">Patricia</option>
             <option value="Viviane">Viviane</option>
