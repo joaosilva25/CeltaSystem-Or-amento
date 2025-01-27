@@ -84,7 +84,6 @@ export default function FormTemplate() {
       attendent &&
       cliente &&
       email &&
-      cnpj &&
       telefone &&
       freteEntrega &&
       freteRetirada &&
@@ -112,7 +111,7 @@ export default function FormTemplate() {
             Modelo: `${modalOrder}`,
             Cliente: `${cliente}`,
             Email: `${email}`,
-            CNPJ: `${cnpj}`,
+            CNPJ: `${cnpj || "N/I"}`,
             Telefone: `${telefone}`,
             FreteEntrega: `${freteEntrega}`,
             FreteRetirada: `${freteRetirada}`,
