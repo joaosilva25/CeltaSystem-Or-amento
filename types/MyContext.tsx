@@ -29,6 +29,7 @@ export interface MyContextType {
   localUtilizacao: string;
   setLocalUtilizacao: Dispatch<SetStateAction<string>>;
   depositoRetirada: string;
+  tipoTransacao: string;
   setDepositoRetirada: Dispatch<SetStateAction<string>>;
   obs: string;
   setObs: Dispatch<SetStateAction<string>>;

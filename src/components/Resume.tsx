@@ -27,6 +27,7 @@ export default function Resume() {
     localUtilizacao,
     depositoRetirada,
     obs,
+    tipoTransacao,
     errorReq,
     prodInputs,
     showAlert,
@@ -84,6 +85,14 @@ export default function Resume() {
             <h4 className="font-bold text-sm">Modelo Contrato:</h4>
             <h4 className="font-light text-sm">
               {modalOrder || "Não informado"}
+            </h4>
+          </div>
+
+          {/* Tipo Transação */}
+          <div className="flex gap-2 mb-2">
+            <h4 className="font-bold text-sm">Tipo Transação:</h4>
+            <h4 className="font-light text-sm">
+              {tipoTransacao || "Não informado"}
             </h4>
           </div>
 

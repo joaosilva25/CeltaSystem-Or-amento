@@ -37,6 +37,8 @@ export default function FormTemplate() {
   const [cliente, setCliente] = useState("");
   const [email, setEmail] = useState("");
   const [cnpj, setCnpj] = useState("");
+  const [tipoTransacao, setTipoTransacao] = useState("");
+  const [aluguel, setAluguel] = useState("");
   const [telefone, setTelefone] = useState("");
   const [freteEntrega, setFreteEntrega] = useState("0");
   const [freteRetirada, setFreteRetirada] = useState("0");
@@ -118,6 +120,7 @@ export default function FormTemplate() {
             PeriodoMinimo: `${periodoMinimo}`,
             LocalUtilizacao: `${localUtilizacao}`,
             DepositoRetirada: `${depositoRetirada}`,
+            TipoTransacao: `${tipoTransacao}`,
             Obs: `${obs}`,
             Produtos: filterProducts.map((input) => ({
               Produto: input.produto,
@@ -183,6 +186,18 @@ export default function FormTemplate() {
             <option value="Reefer20">Reefer 20</option>
             <option value="Reefer40">Reefer 40</option>
             <option value="Dry / Modular">Dry / Modular</option>
+          </select>
+
+          <label className="mt-10 block text-sm/6 font-bold text-gray-900">
+            Tipo de Transação*
+          </label>
+          <select
+            className="mb-4 h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
+            value={tipoTransacao}
+            onChange={(e) => setTipoTransacao(e.target.value)}
+          >
+            <option value="Venda">Venda</option>
+            <option value="Aluguel">Aluguel</option>
           </select>
         </>
       ),
@@ -452,6 +467,7 @@ export default function FormTemplate() {
         depositoRetirada,
         setDepositoRetirada,
         obs,
+        tipoTransacao,
         prodInputs,
         errorReq,
         showAlert,
