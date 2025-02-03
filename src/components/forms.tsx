@@ -363,8 +363,6 @@ export default function FormTemplate() {
           />
           </>):null}
           
-          {tipoTransacao==="Aluguel" ? (
-          <>
             <label className="mt-4 block text-sm/6 font-bold text-gray-900">
               Local de utilização*
             </label>
@@ -374,8 +372,6 @@ export default function FormTemplate() {
               value={localUtilizacao}
               onChange={(e) => setLocalUtilizacao(e.target.value)}
             />
-          </>
-          ):null}
 
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
             Frete de Entrega*
