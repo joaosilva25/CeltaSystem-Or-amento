@@ -390,18 +390,19 @@ export default function FormTemplate() {
           />
           {tipoTransacao==="Aluguel" ? (
           <>
-          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
-            Frete Retirada*
-          </label>
-          <input
-            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Frete Retirada"
-            type="number"
-            min={0}
-            value={freteRetirada}
-            onChange={(e) => setFreteRetirada(e.target.value)}
-          />
-          </>):null}
+            <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+              Frete Retirada*
+            </label>
+            <input
+              className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+              placeholder="Frete Retirada"
+              type="number"
+              min={0}
+              value={freteRetirada}
+              onChange={(e) => setFreteRetirada(e.target.value)}
+            />
+          </>
+          ):null}
           
          {tipoTransacao==="Aluguel" ? (
           <>
@@ -417,7 +418,7 @@ export default function FormTemplate() {
               onChange={(e) => setPeriodoMinimo(e.target.value)}
             />
           </>
-          )}
+          ):null}
         </>
       ),
       index: 4,
