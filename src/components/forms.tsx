@@ -92,8 +92,7 @@ export default function FormTemplate() {
       periodoMinimo &&
       localUtilizacao &&
       depositoRetirada &&
-      tipoTransacao &&
-      obs
+      tipoTransacao
     ) {
       let filterProducts = prodInputs.filter(
         (produto) =>
