@@ -37,7 +37,7 @@ export default function FormTemplate() {
   const [cliente, setCliente] = useState("");
   const [email, setEmail] = useState("");
   const [cnpj, setCnpj] = useState("");
-  const [tipoTransacao, setTipoTransacao] = useState("");
+  const [tipoTransacao, setTipoTransacao] = useState("Venda");
   const [aluguel, setAluguel] = useState("");
   const [telefone, setTelefone] = useState("");
   const [freteEntrega, setFreteEntrega] = useState("0");
