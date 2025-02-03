@@ -362,16 +362,20 @@ export default function FormTemplate() {
             onChange={(e) => setDepositoRetirada(e.target.value)}
           />
           </>):null}
-
-          <label className="mt-4 block text-sm/6 font-bold text-gray-900">
-            Local de utilização*
-          </label>
-          <input
-            className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Local de utilização"
-            value={localUtilizacao}
-            onChange={(e) => setLocalUtilizacao(e.target.value)}
-          />
+          
+          {tipoTransacao==="Aluguel" ? (
+          <>
+            <label className="mt-4 block text-sm/6 font-bold text-gray-900">
+              Local de utilização*
+            </label>
+            <input
+              className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+              placeholder="Local de utilização"
+              value={localUtilizacao}
+              onChange={(e) => setLocalUtilizacao(e.target.value)}
+            />
+          </>
+          ):null}
 
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
             Frete de Entrega*
