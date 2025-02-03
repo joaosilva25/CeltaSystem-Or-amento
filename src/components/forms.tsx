@@ -351,7 +351,7 @@ export default function FormTemplate() {
       title: "Frete",
       content: (
         <>
-          {tipoTransacao==="Aluguel" && (
+          {tipoTransacao==="Aluguel" ? (
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
             Deposito Retirada*
           </label>
@@ -360,7 +360,7 @@ export default function FormTemplate() {
             placeholder="Deposito Retirada"
             value={depositoRetirada}
             onChange={(e) => setDepositoRetirada(e.target.value)}
-          />)}
+          />):null}
 
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
             Local de utilização*
@@ -383,7 +383,7 @@ export default function FormTemplate() {
             value={freteEntrega}
             onChange={(e) => setFreteEntrega(e.target.value)}
           />
-          {tipoTransacao==="Aluguel" && (
+          {tipoTransacao==="Aluguel" ? (
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
             Frete Retirada*
           </label>
@@ -394,7 +394,7 @@ export default function FormTemplate() {
             min={0}
             value={freteRetirada}
             onChange={(e) => setFreteRetirada(e.target.value)}
-          />)}
+          />):null}
           
 
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
