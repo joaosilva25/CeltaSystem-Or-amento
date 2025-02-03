@@ -88,10 +88,8 @@ export default function FormTemplate() {
       email &&
       telefone &&
       freteEntrega &&
-      freteRetirada &&
       periodoMinimo &&
       localUtilizacao &&
-      depositoRetirada &&
       tipoTransacao
     ) {
       let filterProducts = prodInputs.filter(
