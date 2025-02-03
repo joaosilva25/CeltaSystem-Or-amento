@@ -37,7 +37,7 @@ export default function FormTemplate() {
   const [cliente, setCliente] = useState("");
   const [email, setEmail] = useState("");
   const [cnpj, setCnpj] = useState("");
-  const [tipoTransacao, setTipoTransacao] = useState("Venda");
+  const [tipoTransacao, setTipoTransacao] = useState("");
   const [aluguel, setAluguel] = useState("");
   const [telefone, setTelefone] = useState("");
   const [freteEntrega, setFreteEntrega] = useState("0");
@@ -196,6 +196,7 @@ export default function FormTemplate() {
             value={tipoTransacao}
             onChange={(e) => setTipoTransacao(e.target.value)}
           >
+            <option value="">Selecione...</option>
             <option value="Venda">Venda</option>
             <option value="Aluguel">Aluguel</option>
           </select>
