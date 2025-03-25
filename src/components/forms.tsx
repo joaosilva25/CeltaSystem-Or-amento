@@ -113,8 +113,12 @@ export default function FormTemplate() {
             CNPJ: `${cnpj || "N/I"}`,
             Telefone: `${telefone}`,
             FreteEntrega: `${freteEntrega}`,
-            FreteRetirada: `${freteRetirada}`,
-            PeriodoMinimo: `${periodoMinimo}`,
+            ...(tipoTransacao === "Aluguel" && {
+              FreteRetirada: `${freteRetirada}`,
+            }),
+            ...(tipoTransacao === "Aluguel" && {
+              PeriodoMinimo: `${periodoMinimo}`,
+            }),
             LocalUtilizacao: `${localUtilizacao}`,
             DepositoRetirada: `${depositoRetirada}`,
             TipoTransacao: `${tipoTransacao}`,
