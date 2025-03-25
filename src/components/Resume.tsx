@@ -173,12 +173,14 @@ export default function Resume() {
           </div>
 
           {/* Período Minimo */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Périodo Mínimo de Locação:</h4>
-            <h4 className="font-light text-sm">
-              {`${periodoMinimo} meses` || "Não informado"}
-            </h4>
-          </div>
+          {tipoTransacao == "Aluguel" && (
+            <div className="flex gap-2 mb-2">
+              <h4 className="font-bold text-sm">Périodo Mínimo de Locação:</h4>
+              <h4 className="font-light text-sm">
+                {`${periodoMinimo} meses` || "Não informado"}
+              </h4>
+            </div>
+          )}
 
           {/* Observação */}
           <div className="flex gap-2 mb-2">
