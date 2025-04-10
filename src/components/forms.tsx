@@ -5,6 +5,9 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import { AnimatePresence, motion } from "motion/react";
 import { IoAddCircle } from "react-icons/io5";
 import Resume from "./Resume";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { LiaTrashAlt } from "react-icons/lia";
 import { MyContextType } from "../../types/MyContext";
 
 export const MyContext = createContext<MyContextType | null>(null);
@@ -78,6 +81,30 @@ export default function FormTemplate() {
   const deleteProduct = (indexProd: number) => {
     prodInputs.splice(indexProd, 1);
     setProdInputs([...prodInputs]);
+  };
+
+  const clearForm = () => {
+    setAttendent("");
+    setModalOrder("");
+    setCliente("");
+    setEmail("");
+    setCnpj("");
+    setTelefone("");
+    setFreteEntrega("0");
+    setFreteRetirada("0");
+    setPeriodoMinimo("0");
+    setLocalUtilizacao("");
+    setDepositoRetirada("");
+    setObs("");
+    setTipoTransacao("");
+    setProdInputs([
+      {
+        produto: "",
+        medidas: "",
+        quantidade: "1",
+        valor: "0",
+      },
+    ]);
   };
 
   const requisiton = async () => {
@@ -456,6 +483,18 @@ export default function FormTemplate() {
     setActiveTab(newActive);
   };
 
+  const prev = () => {
+    let newActive = activeTab - 1;
+
+    console.log(activeTab);
+    if (newActive >= tabs.length) {
+      newActive = 0; // Se ultrapassar o índice máximo, volta para 0
+    }
+
+    // Atualizando o estado com o novo índice
+    setActiveTab(newActive);
+  };
+
   return (
     <MyContext.Provider
       value={{
@@ -541,16 +580,25 @@ export default function FormTemplate() {
             >
               <div className="max-h-[400px]">{tabs[activeTab].content}</div>
             </form>
-            <div className="mt-2 py-12 w-full">
+            <div className="mt-2 py-12 w-full flex justify-around gap-10">
               <button
-                onClick={() => next()}
-                className="h-14 flex w-full shadow-xl p-2
+                onClick={() => clearForm()}
+                className="h-14 flex w-full shadow-xl
 
-justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline
+justify-around  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline
 active:scale-105"
               >
-                Próximo
+                Limpar Tudo
+                <LiaTrashAlt className="text-2xl" />
               </button>
+              <div className="flex gap-1">
+                <button onClick={() => prev()} className="">
+                  <IoIosArrowDropleftCircle className="text-5xl" />
+                </button>
+                <button onClick={() => next()} className="">
+                  <IoIosArrowDroprightCircle className="text-5xl" />
+                </button>
+              </div>
               {/* {tabs.map((tab, index) => (
               <button
                 key={index}

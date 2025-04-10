@@ -7,6 +7,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { AiOutlineLoading } from "react-icons/ai";
 import { OrbitProgress } from "react-loading-indicators";
 import { motion } from "motion/react";
+import { LiaFileAlt } from "react-icons/lia";
 
 export default function Resume() {
   const context = useContext(MyContext);
@@ -190,7 +191,7 @@ export default function Resume() {
         </div>
         <button
           onClick={requisiton}
-          className="h-14 relative top-2 flex w-full justify-center gap-5 items-center bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-black active:scale-105 focus-visible:outline"
+          className="h-14 relative top-2 flex w-full justify-center gap-5 items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold hover:text-white shadow-sm hover:bg-black active:scale-105 focus-visible:outline"
         >
           {loadReqText ? (
             <>
@@ -198,7 +199,10 @@ export default function Resume() {
               Gerando Orçamento...
             </>
           ) : (
-            "Gerar Orçamento"
+            <>
+              Gerar Orçamento
+              <LiaFileAlt className="text-2xl" />
+            </>
           )}
         </button>
       </div>
