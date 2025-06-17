@@ -1,14 +1,14 @@
 "use client";
-import { Console } from "console";
-import { useEffect, useState, createContext } from "react";
+import { useState, createContext } from "react";
 import { FaDeleteLeft } from "react-icons/fa6";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { IoAddCircle } from "react-icons/io5";
 import Resume from "./Resume";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { LiaTrashAlt } from "react-icons/lia";
 import { MyContextType } from "../../types/MyContext";
+import CurrencyInput from "react-currency-input-field";
 
 export const MyContext = createContext<MyContextType | null>(null);
 export default function FormTemplate() {
@@ -162,13 +162,13 @@ export default function FormTemplate() {
       if (req.ok) {
         setShowAlert({
           severity: "success",
-          text: "orçamento gerado com Sucesso",
+          text: "Orçamento gerado com sucesso",
           show: true,
         });
       } else {
         setShowAlert({
           severity: "error",
-          text: "Erro Interno na Requisição",
+          text: "Erro interno na requisição",
           show: true,
         });
       }
@@ -198,6 +198,7 @@ export default function FormTemplate() {
             <option value="">Selecione...</option>
             <option value="Matheus">Matheus</option>
             <option value="Patricia">Patricia</option>
+            <option value="Loran">Loran</option>
             <option value="Nathalia">Nathalia</option>
             <option value="Teste">Teste</option>
           </select>
@@ -301,7 +302,6 @@ export default function FormTemplate() {
                   </button>
                 ) : null}
               </div>
-
               <label className="mt-4 block text-sm/6 font-bold text-gray-900">
                 Produto*
               </label>
@@ -313,7 +313,6 @@ export default function FormTemplate() {
                   handleInputChange(index, "produto", e.target.value)
                 }
               />
-
               <label className="mt-4 block text-sm/6 font-bold text-gray-900">
                 Medidas*
               </label>
@@ -338,7 +337,6 @@ export default function FormTemplate() {
                   12,19m x 2,44m x 2,90m (40HC)
                 </option>
               </select>
-
               <label className="mt-4 block text-sm/6 font-bold text-gray-900">
                 Quantidade*
               </label>
@@ -352,18 +350,20 @@ export default function FormTemplate() {
                   handleInputChange(index, "quantidade", e.target.value)
                 }
               />
-
               <label className="mt-4 block text-sm/6 font-bold text-gray-900">
                 Valor*
               </label>
-              <input
+              <CurrencyInput
+                id="input-example"
                 className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-                placeholder="Valor"
-                type="number"
-                min={0}
+                name="valor"
+                placeholder="R$0,00"
+                prefix="R$"
+                defaultValue={1}
+                decimalsLimit={2}
                 value={input.valor}
-                onChange={(e) =>
-                  handleInputChange(index, "valor", e.target.value)
+                onValueChange={(value, name) =>
+                  handleInputChange(index, name, value)
                 }
               />
             </div>
@@ -409,26 +409,34 @@ export default function FormTemplate() {
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
             Frete de Entrega*
           </label>
-          <input
+          <CurrencyInput
+            id="frete-entrega"
             className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Frete de Entrega"
-            type="number"
-            min={0}
+            name="freteEntrega"
+            placeholder="Frete Entrega"
+            prefix="R$"
+            decimalsLimit={2}
+            allowNegativeValue={false}
+            allowDecimals={true}
             value={freteEntrega}
-            onChange={(e) => setFreteEntrega(e.target.value)}
+            onValueChange={(value) => setFreteEntrega(value ?? "")}
           />
           {tipoTransacao === "Aluguel" ? (
             <>
               <label className="mt-4 block text-sm/6 font-bold text-gray-900">
                 Frete Retirada*
               </label>
-              <input
+              <CurrencyInput
+                id="frete-retirada"
                 className="h-12 block w-full bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+                name="freteRetirada"
                 placeholder="Frete Retirada"
-                type="number"
-                min={0}
+                prefix="R$"
+                decimalsLimit={2}
+                allowNegativeValue={false}
+                allowDecimals={true}
                 value={freteRetirada}
-                onChange={(e) => setFreteRetirada(e.target.value)}
+                onValueChange={(value) => setFreteRetirada(value ?? "")}
               />
             </>
           ) : null}

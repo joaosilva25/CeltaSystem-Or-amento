@@ -2,10 +2,7 @@
 import { useContext } from "react";
 import { MyContext } from "./forms";
 import Alert from "@mui/material/Alert";
-import LoadingButton from "@mui/lab/LoadingButton";
-import SaveIcon from "@mui/icons-material/Save";
 import { AiOutlineLoading } from "react-icons/ai";
-import { OrbitProgress } from "react-loading-indicators";
 import { motion } from "motion/react";
 import { LiaFileAlt } from "react-icons/lia";
 
@@ -136,7 +133,15 @@ export default function Resume() {
                 Quantidade= {product.quantidade || "Não informado"}
               </h4>
               <h4 className="font-light text-sm">
-                Valor={`R$ ${product.valor}` || "Não informado"}
+                Valor=
+                {product.valor != null && product.valor !== ""
+                  ? new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }).format(Number(product.valor))
+                  : "Não informado"}
               </h4>
             </div>
           ))}
@@ -161,7 +166,14 @@ export default function Resume() {
           <div className="flex gap-2 mb-2">
             <h4 className="font-bold text-sm">Frete de Entrega:</h4>
             <h4 className="font-light text-sm">
-              {`R$ ${freteEntrega}` || "Não informado"}
+              {freteEntrega != null && freteEntrega !== ""
+                ? new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(Number(freteEntrega))
+                : "Não informado"}
             </h4>
           </div>
 
@@ -169,7 +181,14 @@ export default function Resume() {
           <div className="flex gap-2 mb-2">
             <h4 className="font-bold text-sm">Frete Retirada:</h4>
             <h4 className="font-light text-sm">
-              {`R$ ${freteRetirada}` || "Não informado"}
+              {freteRetirada != null && freteRetirada !== ""
+                ? new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(Number(freteRetirada))
+                : "Não informado"}
             </h4>
           </div>
 
