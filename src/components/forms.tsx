@@ -214,6 +214,7 @@ export default function FormTemplate() {
             <option value="Reefer20">Reefer 20</option>
             <option value="Reefer40">Reefer 40</option>
             <option value="Dry / Modular">Dry / Modular</option>
+            <option value="Dry Baby">Dry Baby</option>
           </select>
 
           <label className="mt-10 block text-sm/6 font-bold text-gray-900">
@@ -323,6 +324,9 @@ export default function FormTemplate() {
                 }
               >
                 <option value="">Selecione...</option>
+                <option value="3,0m x 2,44m x 2,60m (Dry Baby)">
+                  3,0m x 2,44m x 2,60m (Dry Baby)
+                </option>
                 <option value="6,06m x 2,44m x 2,59m (20ST)">
                   6,06m x 2,44m x 2,59m (20ST)
                 </option>
