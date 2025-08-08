@@ -126,7 +126,7 @@ export default function FormTemplate() {
           produto.medidas.trim() !== ""
       );
       const req = await fetch(
-        "https://n8n-zgewg-u14829.vm.elestio.app/webhook/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
+        "https://n8n.srv946688.hstgr.cloud/webhook/ccc9cfa3-6a89-47cf-b03c-51c86e2fd3a7",
         {
           method: "POST",
           headers: {
