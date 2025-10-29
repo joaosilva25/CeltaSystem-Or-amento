@@ -326,19 +326,19 @@ export default function FormTemplate() {
                 }
               >
                 <option value="">Selecione...</option>
-                <option value="3,0m x 2,44m x 2,60m (Dry Baby)">
-                  3,0m x 2,44m x 2,60m (Dry Baby)
+                <option value="3,0m x 2,44m x 2,60m (CxLxA)">
+                  3,0m x 2,44m x 2,60m (CxLxA)
                 </option>
-                <option value="6,06m x 2,44m x 2,59m (20ST)">
+                <option value="6,06m x 2,44m x 2,59m (CxLxA)">
                   6,06m x 2,44m x 2,59m (20ST)
                 </option>
-                <option value="6,06m x 2,44m x 2,90m (20HC)">
+                <option value="6,06m x 2,44m x 2,90m (CxLxA)">
                   6,06m x 2,44m x 2,90m (20HC)
                 </option>
-                <option value="12,19m x 2,44m x 2,59m (40ST)">
+                <option value="12,19m x 2,44m x 2,59m (CxLxA)">
                   12,19m x 2,44m x 2,59m (40ST)
                 </option>
-                <option value="12,19m x 2,44m x 2,90m (40HC)">
+                <option value="12,19m x 2,44m x 2,90m (CxLxA)">
                   12,19m x 2,44m x 2,90m (40HC)
                 </option>
               </select>
