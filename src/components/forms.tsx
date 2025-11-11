@@ -199,6 +199,7 @@ export default function FormTemplate() {
             <option value="Matheus">Matheus</option>
             <option value="Patricia">Patricia</option>
             <option value="Nathalia">Nathalia</option>
+            <option value="Juliana">Juliana</option>
             <option value="Teste">Teste</option>
           </select>
 
