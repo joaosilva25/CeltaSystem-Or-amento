@@ -202,6 +202,7 @@ export default function FormTemplate() {
             <option value="Juliana">Juliana</option>
             <option value="Luana">Luana</option>
             <option value="Vitor">Vitor</option>
+            <option value="Sabrina">Sabrina</option>
             <option value="Teste">Teste</option>
           </select>
           <label className="mt-4 block text-sm/6 font-bold text-gray-900">
