@@ -274,6 +274,19 @@ export default function FormTemplate() {
           }),
         },
       );
+
+      if (req.ok) {
+        const blob = await req.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Orcamento - ${cliente} - ${new Date().toLocaleDateString("pt-BR").replace(/\//g, "-")}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+
       setIsResumeOpen(false); // Close drawer first
       setTimeout(() => {
         if (req.ok) {
