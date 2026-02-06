@@ -35,18 +35,6 @@ export interface MyContextType {
   setObs: Dispatch<SetStateAction<string>>;
   errorReq: boolean;
   prodInputs: Produto[];
-  showAlert: {
-    severity: "error" | "warning" | "info" | "success";
-    text: string;
-    show: boolean;
-  };
-  setShowAlert: Dispatch<
-    SetStateAction<{
-      severity: "error" | "warning" | "info" | "success";
-      text: string;
-      show: boolean;
-    }>
-  >;
   loadReqText: boolean;
   requisiton: () => void;
 }

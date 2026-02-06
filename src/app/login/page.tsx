@@ -1,98 +1,147 @@
 "use client";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 export default function Login() {
   const router = useRouter();
-  const [accessCode, setAcessCode] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const [accessCode, setAccessCode] = useState("");
   const [accessError, setAccessError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  function acessLogin() {
-    if (accessCode === "") {
-      return setAccessError("Preencha o campo para acessar");
-    }
-    if (accessCode === process.env.NEXT_PUBLIC_CODE) {
-      router.push("/area");
-      sessionStorage.setItem("authenticated", "true");
-    } else {
-      setAccessError("Código de acesso incorreto");
-    }
+  function handleLogin() {
+    setIsLoading(true);
+    setAccessError("");
+
+    setTimeout(() => {
+      if (accessCode === "") {
+        setAccessError("Preencha o campo para acessar");
+        setIsLoading(false);
+        return;
+      }
+
+      if (accessCode === process.env.NEXT_PUBLIC_CODE) {
+        sessionStorage.setItem("authenticated", "true");
+        router.push("/area");
+      } else {
+        setAccessError("Código de acesso incorreto");
+        setIsLoading(false);
+      }
+    }, 600);
   }
 
   return (
-    <main className="bg-white h-screen grid grid-rows-[auto,1fr] grid-cols-2 w-full text-black">
-      {/* Header */}
-      <header className="col-span-2 p-0">
-        <div className="h-[95px] w-[70px] bg-black p-0 flex items-center justify-center">
+    <div className="flex min-h-screen w-full bg-background text-foreground overflow-hidden font-sans selection:bg-primary selection:text-primary-foreground">
+      {/* Left Side - Image & Content */}
+      <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center overflow-hidden bg-black">
+        {/* Static Background Image */}
+        <div className="absolute inset-0 w-full h-full">
           <Image
-            src="/CC_Negativo.png"
-            width={30}
-            height={30}
-            alt="Descrição da imagem significativa"
+            src="/image6.jpg"
+            alt="Background"
+            fill
+            priority
+            className="object-cover object-center"
           />
+          {/* Dark Overlay for readability */}
+          <div className="absolute inset-0 bg-black/35"></div>
         </div>
-      </header>
-      <motion.div
-        initial={{ x: 200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1, transition: { duration: 0.7 } }}
-        exit={{ x: -200, opacity: 0 }}
-      >
-        <div className="h-full flex font-bold justify-center items-center">
-          <div className="flex flex-col gap-6 w-1/2">
-            <div className="">
-              <h1 className="text-8xl lg:text-[45px]">
-                Bem <span className="font-light">Vindo</span>
-              </h1>
-              <h5 className="text-justify opacity-60 mt-6 text-sm font-light">
-                Sistema de Orçamentos: Organização, Padronização e Controle de
-                Propostas
-              </h5>
-            </div>
-            <div className="mt-10">
-              <label className="lg:text-sm">Código Acesso*</label>
-              <input
-                placeholder="Código Acesso"
-                value={accessCode}
-                onChange={(e) => setAcessCode(e.target.value)}
-                className="lg:h-12 block w-full mt-3 bg-transparent px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2  sm:text-sm/6"
-              ></input>
-            </div>
-            <button
-              onClick={acessLogin}
-              className="h-12 flex w-full shadow-xl relative top-4
-justify-center  items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold text-black hover:bg-black hover:text-white focus-visible:outline active:scale-105"
-            >
-              Acessar
-            </button>
-            <p className="text-center text-red-500 text-sm relative top-4">
-              {accessError}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="relative z-10 p-16 flex flex-col items-start max-w-xl relative bottom-32"
+        >
+          <div className="space-y-6">
+            <p className="text-2xl font-light text-white leading-snug drop-shadow-md">
+              Transforme a maneira como você gerencia{" "}
+              <span className="font-semibold text-white">
+                propostas e orçamentos
+              </span>
+              .
             </p>
-            <h5 className="text-center mt-8 text-md lg:text-sm">
-              <span className="font-light">Acesso somente de</span> usuários
-              autorizados
-            </h5>
           </div>
-        </div>
-      </motion.div>
-      <div className="h-full pl-12 pr-12 pb-8 flex justify-center">
-        <div className="h-full flex w-3/4 bg-black items-center justify-center">
-          <motion.div
-            initial={{ y: 200, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 0.7 } }}
-            exit={{ y: -200, opacity: 0 }}
-          >
+        </motion.div>
+
+        {/* Footer with Logo and Copyright */}
+        <div className="absolute bottom-0 left-0 w-full py-6 px-12 z-20 flex justify-between items-center border-t border-white/20 bg-black/20 backdrop-blur-sm">
+          <div className="opacity-90">
             <Image
               src="/CC_lockup_1_Negativo.png"
-              width={250}
-              height={250}
-              alt="Descrição da imagem significativa"
+              width={100}
+              height={35}
+              alt="Celta Desk"
+              className="object-contain"
             />
-          </motion.div>
+          </div>
+          <div className="text-[10px] text-white/70 font-light tracking-wider uppercase">
+            © Celta Desk {new Date().getFullYear()}
+          </div>
         </div>
       </div>
-    </main>
+
+      {/* Right Side - Login Form */}
+      <div className="flex w-full lg:w-1/2 flex-col justify-center px-8 lg:px-24 xl:px-32 bg-background relative">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="w-full max-w-[420px] mx-auto"
+        >
+          {/* Mobile Logo (Visible only on small screens) */}
+          <div className="lg:hidden mb-12 flex justify-center">
+            <div className="bg-black p-4 rounded-2xl shadow-xl">
+              <Image src="/CC_Negativo.png" width={48} height={48} alt="Logo" />
+            </div>
+          </div>
+
+          <div className="mb-12 text-center lg:text-left">
+            <h2 className="text-3xl leading-tight font-semibold tracking-tight text-foreground mb-4">
+              Login<span className="font-semibold">*</span>
+            </h2>
+            <p className="text-muted-foreground text-sm font-regular">
+              Por favor, insira seu código de acesso para continuar.
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="space-y-2">
+              <Input
+                label="Código de Acesso"
+                type="password"
+                placeholder="Digite seu código..."
+                value={accessCode}
+                onChange={(e) => {
+                  setAccessCode(e.target.value);
+                  if (accessError) setAccessError("");
+                }}
+                error={accessError}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleLogin();
+                }}
+                autoFocus
+              />
+            </div>
+
+            <div className="pt-2">
+              <Button
+                onClick={handleLogin}
+                className="w-full text-sm"
+                isLoading={isLoading}
+              >
+                Login
+              </Button>
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-6 mt-8"></div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 }

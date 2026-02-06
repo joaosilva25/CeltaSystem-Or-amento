@@ -1,10 +1,56 @@
 "use client";
 import { useContext } from "react";
-import { MyContext } from "./forms";
-import Alert from "@mui/material/Alert";
-import { AiOutlineLoading } from "react-icons/ai";
-import { motion } from "motion/react";
-import { LiaFileAlt } from "react-icons/lia";
+import { MyContext } from "../context/FormContext";
+import {
+  User,
+  Mail,
+  Phone,
+  Building2,
+  FileText,
+  Truck,
+  MapPin,
+  Calendar,
+  MessageSquare,
+  Package,
+  CreditCard,
+  DollarSign,
+  Box,
+} from "lucide-react";
+
+const SectionTitle = ({ children }: { children: React.ReactNode }) => (
+  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4 mt-6 first:mt-0 flex items-center gap-2">
+    {children}
+  </h3>
+);
+
+const ResumeItem = ({
+  icon: Icon,
+  label,
+  value,
+  subValue,
+}: {
+  icon: any;
+  label: string;
+  value: string | number | null;
+  subValue?: string;
+}) => (
+  <div className="flex items-start gap-4 p-3 rounded-xl hover:bg-accent transition-colors duration-200 group">
+    <div className="p-2 bg-muted rounded-lg text-muted-foreground group-hover:bg-background group-hover:text-foreground group-hover:shadow-sm transition-all duration-200 border border-transparent group-hover:border-border">
+      <Icon className="w-5 h-5" strokeWidth={1.3} />
+    </div>
+    <div className="flex-1 min-w-0">
+      <p className="text-xs font-medium text-muted-foreground mb-0.5">
+        {label}
+      </p>
+      <p className="text-sm font-medium text-foreground truncate">
+        {value || "Não informado"}
+      </p>
+      {subValue && (
+        <p className="text-xs text-muted-foreground mt-0.5">{subValue}</p>
+      )}
+    </div>
+  </div>
+);
 
 export default function Resume() {
   const context = useContext(MyContext);
@@ -26,204 +72,151 @@ export default function Resume() {
     depositoRetirada,
     obs,
     tipoTransacao,
-    errorReq,
     prodInputs,
-    showAlert,
-    setShowAlert,
-    requisiton,
-    loadReqText,
   } = context;
 
-  function closeAlert() {
-    setShowAlert({
-      severity: "success",
-      text: "",
-      show: false,
-    });
-  }
+  const formatCurrency = (value: string | number) => {
+    if (!value) return "R$ 0,00";
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(Number(value));
+  };
 
   return (
-    <div className="flex items-center flex-col lg:justify-center bg-white">
-      {showAlert.show && (
-        <motion.div
-          initial={{ scale: 1, opacity: 0 }}
-          animate={{ scale: 1.2, opacity: 1, transition: { duration: 0.3 } }}
-          exit={{ scale: 0, opacity: 0 }}
-        >
-          <Alert
-            severity={showAlert.severity}
-            className="flex relative bottom-4 w-[450px]"
-            onClose={closeAlert}
-          >
-            <span className="text-xs">{showAlert.text}</span>
-          </Alert>
-        </motion.div>
-      )}
-      <div className="w-[400px] lg:h-[600px] p-10 bg-white border flex justify-center flex-col items-center gap-10">
-        <div className="w-full ">
-          <h1 className="text-2xl text-center">
-            <span className="font-bold">Res</span>umo
-          </h1>
-          <p className="opacity-50 text-sm text-justify w-72 mt-8">
-            Confira e confirme os dados inseridos antes de prosseguir com a
-            ação.
-          </p>
-        </div>
-        <div className="h-[300px] overflow-y-auto flex flex-col gap-3  w-full py-6">
-          {/* Atendente */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Atendente:</h4>
-            <h4 className="font-light text-sm">
-              {attendent || "Não informado"}
-            </h4>
-          </div>
-
-          {/* Modelo Contrato */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Modelo Contrato:</h4>
-            <h4 className="font-light text-sm">
-              {modalOrder || "Não informado"}
-            </h4>
-          </div>
-
-          {/* Tipo Transação */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Tipo Transação:</h4>
-            <h4 className="font-light text-sm">
-              {tipoTransacao || "Não informado"}
-            </h4>
-          </div>
-
-          {/* Nome / Empresa */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Nome / Empresa:</h4>
-            <h4 className="font-light text-sm">{cliente || "Não informado"}</h4>
-          </div>
-
-          {/* Email */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Email:</h4>
-            <h4 className="font-light text-sm">{email || "Não informado"}</h4>
-          </div>
-
-          {/* Telefone */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Telefone:</h4>
-            <h4 className="font-light text-sm">
-              {telefone || "Não informado"}
-            </h4>
-          </div>
-
-          {/* CNPJ da Empresa */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">CNPJ da Empresa:</h4>
-            <h4 className="font-light text-sm">{cnpj || "Não informado"}</h4>
-          </div>
-
-          {prodInputs.map((product, index) => (
-            <div key={index}>
-              <h4 className="font-bold text-sm">Produto {index + 1}:</h4>
-              <h4 className="font-light text-sm">
-                Produto= {product.produto || "Não informado"}
-              </h4>
-              <h4 className="font-light text-sm">
-                Medidas= {product.medidas || "Não informado"}
-              </h4>
-              <h4 className="font-light text-sm">
-                Quantidade= {product.quantidade || "Não informado"}
-              </h4>
-              <h4 className="font-light text-sm">
-                Valor=
-                {product.valor != null && product.valor !== ""
-                  ? new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(Number(product.valor))
-                  : "Não informado"}
-              </h4>
-            </div>
-          ))}
-
-          {/* Deposito Retirada */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Deposito Retirada:</h4>
-            <h4 className="font-light text-sm">
-              {depositoRetirada || "Não informado"}
-            </h4>
-          </div>
-
-          {/* Local de utilização */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Local de utilização:</h4>
-            <h4 className="font-light text-sm">
-              {localUtilizacao || "Não informado"}
-            </h4>
-          </div>
-
-          {/* Frete de Entrega */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Frete de Entrega:</h4>
-            <h4 className="font-light text-sm">
-              {freteEntrega != null && freteEntrega !== ""
-                ? new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  }).format(Number(freteEntrega))
-                : "Não informado"}
-            </h4>
-          </div>
-
-          {/* Frete Retirada */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Frete Retirada:</h4>
-            <h4 className="font-light text-sm">
-              {freteRetirada != null && freteRetirada !== ""
-                ? new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  }).format(Number(freteRetirada))
-                : "Não informado"}
-            </h4>
-          </div>
-
-          {/* Período Minimo */}
-          {tipoTransacao == "Aluguel" && (
-            <div className="flex gap-2 mb-2">
-              <h4 className="font-bold text-sm">Périodo Mínimo de Locação:</h4>
-              <h4 className="font-light text-sm">
-                {`${periodoMinimo} meses` || "Não informado"}
-              </h4>
-            </div>
-          )}
-
-          {/* Observação */}
-          <div className="flex gap-2 mb-2">
-            <h4 className="font-bold text-sm">Observação:</h4>
-            <h4 className="font-light text-sm">{obs || "Não informado"}</h4>
+    <div className="flex flex-col h-full bg-card text-card-foreground">
+      <div className="flex-1 space-y-8 p-6">
+        {/* Informações Gerais */}
+        <div>
+          <SectionTitle>Dados Gerais</SectionTitle>
+          <div className="grid grid-cols-1 gap-1">
+            <ResumeItem icon={User} label="Atendente" value={attendent} />
+            <ResumeItem
+              icon={FileText}
+              label="Modelo de Contrato"
+              value={modalOrder}
+            />
+            <ResumeItem
+              icon={CreditCard}
+              label="Tipo de Transação"
+              value={tipoTransacao}
+            />
           </div>
         </div>
-        <button
-          onClick={requisiton}
-          className="h-14 relative top-2 flex w-full justify-center gap-5 items-center bg-transparent border border-black px-3 py-1.5 text-sm/6 font-semibold hover:text-white shadow-sm hover:bg-black active:scale-105 focus-visible:outline"
-        >
-          {loadReqText ? (
-            <>
-              <AiOutlineLoading className="animate-spin" />
-              Gerando Orçamento...
-            </>
-          ) : (
-            <>
-              Gerar Orçamento
-              <LiaFileAlt className="text-2xl" />
-            </>
-          )}
-        </button>
+
+        {/* Informações do Cliente */}
+        <div>
+          <SectionTitle>Cliente</SectionTitle>
+          <div className="grid grid-cols-1 gap-1">
+            <ResumeItem
+              icon={Building2}
+              label="Nome / Empresa"
+              value={cliente}
+              subValue={cnpj ? `CNPJ: ${cnpj}` : undefined}
+            />
+            <ResumeItem icon={Mail} label="Email" value={email} />
+            <ResumeItem icon={Phone} label="Telefone" value={telefone} />
+          </div>
+        </div>
+
+        {/* Produtos */}
+        <div>
+          <SectionTitle>Produtos Selecionados</SectionTitle>
+          <div className="space-y-4">
+            {prodInputs.map((product, index) => (
+              <div
+                key={index}
+                className="bg-card rounded-xl p-4 border border-border hover:border-primary/50 transition-colors"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-primary text-primary-foreground w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">
+                    {index + 1}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {product.produto || "Produto Sem Nome"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-3 pl-7">
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <Box
+                      className="w-4 h-4 text-muted-foreground"
+                      strokeWidth={1.3}
+                    />
+                    <span>{product.medidas || "Medidas não inf."}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <Package
+                      className="w-4 h-4 text-muted-foreground"
+                      strokeWidth={1.3}
+                    />
+                    <span>{product.quantidade} unidade(s)</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm font-medium text-foreground">
+                    <DollarSign
+                      className="w-4 h-4 text-muted-foreground"
+                      strokeWidth={1.3}
+                    />
+                    <span>{formatCurrency(product.valor)}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Logística */}
+        <div>
+          <SectionTitle>Logística e Entrega</SectionTitle>
+          <div className="grid grid-cols-1 gap-1">
+            <ResumeItem
+              icon={MapPin}
+              label="Local de Utilização"
+              value={localUtilizacao}
+            />
+            <ResumeItem
+              icon={Truck}
+              label="Frete de Entrega"
+              value={formatCurrency(freteEntrega)}
+            />
+            {tipoTransacao === "Aluguel" && (
+              <>
+                <ResumeItem
+                  icon={Truck}
+                  label="Frete de Retirada"
+                  value={formatCurrency(freteRetirada)}
+                />
+                <ResumeItem
+                  icon={Calendar}
+                  label="Período Mínimo"
+                  value={periodoMinimo ? `${periodoMinimo} meses` : null}
+                />
+                <ResumeItem
+                  icon={Building2}
+                  label="Depósito de Retirada"
+                  value={depositoRetirada}
+                />
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Observações */}
+        {obs && (
+          <div>
+            <SectionTitle>Observações</SectionTitle>
+            <div className="bg-muted/50 rounded-xl p-4 border border-border flex gap-3">
+              <MessageSquare
+                className="w-5 h-5 text-muted-foreground shrink-0"
+                strokeWidth={1.3}
+              />
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {obs}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
