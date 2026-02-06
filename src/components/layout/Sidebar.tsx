@@ -139,7 +139,7 @@ export default function Sidebar({ className = "" }: { className?: string }) {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto py-2 px-3 space-y-6 overflow-x-hidden">
+      <div className="flex-1 overflow-y-auto py-2 px-4 space-y-6 overflow-x-hidden">
         {navGroups.map((group, groupIndex) => (
           <div key={groupIndex}>
             <AnimatePresence>
@@ -164,10 +164,10 @@ export default function Sidebar({ className = "" }: { className?: string }) {
                       if (item.onClick) item.onClick();
                       else if (item.href !== "#") router.push(item.href);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative
+                    className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative border-black/10
                       ${
                         item.active
-                          ? "bg-primary/10 text-primary" // Active state
+                          ? "bg-muted/50 text-primary border" // Active state
                           : "text-muted-foreground hover:bg-accent hover:text-accent-foreground" // Inactive state
                       }
                       ${isCollapsed ? "justify-center px-0" : ""}
