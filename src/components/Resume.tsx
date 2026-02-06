@@ -86,12 +86,12 @@ export default function Resume() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-card text-card-foreground">
+    <div className="flex flex-col h-full text-card-foreground">
       <div className="flex-1 space-y-8 p-6">
         {/* Informações Gerais */}
         <div>
           <SectionTitle>Dados Gerais</SectionTitle>
-          <div className="grid grid-cols-1 gap-1">
+          <div className="bg-card rounded-xl p-4 border border-border grid grid-cols-1 gap-1">
             <ResumeItem icon={User} label="Atendente" value={attendent} />
             <ResumeItem
               icon={FileText}
@@ -109,7 +109,7 @@ export default function Resume() {
         {/* Informações do Cliente */}
         <div>
           <SectionTitle>Cliente</SectionTitle>
-          <div className="grid grid-cols-1 gap-1">
+          <div className="bg-card rounded-xl p-4 border border-border grid grid-cols-1 gap-1">
             <ResumeItem
               icon={Building2}
               label="Nome / Empresa"
@@ -169,7 +169,7 @@ export default function Resume() {
         {/* Logística */}
         <div>
           <SectionTitle>Logística e Entrega</SectionTitle>
-          <div className="grid grid-cols-1 gap-1">
+          <div className="bg-card rounded-xl p-4 border border-border grid grid-cols-1 gap-1">
             <ResumeItem
               icon={MapPin}
               label="Local de Utilização"
