@@ -596,7 +596,7 @@ export default function FormTemplate() {
               )}
             </div>
 
-            {tipoTransacao === "Aluguel" && (
+            {/* {tipoTransacao === "Aluguel" && (
               <div>
                 <InputLabel required>
                   Período Mínimo de Locação (meses)
@@ -610,7 +610,7 @@ export default function FormTemplate() {
                   onChange={(e) => setPeriodoMinimo(e.target.value)}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </>
       ),
