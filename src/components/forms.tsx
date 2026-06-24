@@ -339,6 +339,7 @@ export default function FormTemplate() {
                 onChange={(e) => setModalOrder(e.target.value)}
               >
                 <option value="">Selecione...</option>
+                <option value="Reefer10">Reefer 10</option>
                 <option value="Reefer20">Reefer 20</option>
                 <option value="Reefer40">Reefer 40</option>
                 <option value="Dry / Modular">Dry / Modular</option>
